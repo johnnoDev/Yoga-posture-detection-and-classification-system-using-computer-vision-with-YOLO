@@ -2,4 +2,8 @@
 venv
 *.txt
 *.webp
+*.jpg
+*.jpeg
+*.png
 *.mp4
+*__pycache__
