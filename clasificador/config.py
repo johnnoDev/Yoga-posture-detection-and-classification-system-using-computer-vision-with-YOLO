@@ -59,10 +59,22 @@ ROBOFLOW_VERSION = 1
 #   yolo11l-cls.pt (large)   yolo11x-cls.pt (extra large)
 MODELO_BASE = "yolo11m-cls.pt"
 
-# Ruta donde entrenar.py deja el modelo ya entrenado.
-# predecir.py y clasificar_en_vivo.py lo cargan desde aqui.
+# Carpeta de salida del entrenamiento (ignorada por git: pesa y se regenera).
 DIR_ENTRENAMIENTO = BASE_DIR / "runs" / "classify" / "train"
 MODELO_ENTRENADO = DIR_ENTRENAMIENTO / "weights" / "best.pt"
+
+# Copia estable del modelo final, en una ruta fija y SI versionada en git
+# (~20 MB). entrenar.py copia best.pt aqui al terminar; imagenes.py,
+# predecir.py y clasificar_en_vivo.py lo usan si existe. Asi, al clonar el
+# repo en otra maquina el detector funciona sin reentrenar.
+MODELO_PUBLICADO = BASE_DIR / "modelo.pt"
+
+
+def ruta_modelo():
+    """Devuelve el modelo a usar: la copia publicada si existe, si no el best.pt."""
+    if MODELO_PUBLICADO.exists():
+        return MODELO_PUBLICADO
+    return MODELO_ENTRENADO
 
 # ----------------------------------------------------------------------
 # Parametros de entrenamiento

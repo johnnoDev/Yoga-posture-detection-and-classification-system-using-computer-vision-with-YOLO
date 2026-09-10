@@ -24,20 +24,21 @@ Uso:
 import cv2
 from ultralytics import YOLO
 
-from config import MODELO_ENTRENADO
+from config import ruta_modelo
 
 # Indice de la camara (0 = webcam por defecto) o URL de un stream RTSP/IP
 CAMERA_INDEX = 0
 
 
 def main():
-    if not MODELO_ENTRENADO.exists():
-        print(f"No se encontro el modelo entrenado en {MODELO_ENTRENADO}")
+    modelo = ruta_modelo()
+    if not modelo.exists():
+        print(f"No se encontro el modelo entrenado en {modelo}")
         print("Ejecuta primero:  python clasificador/entrenar.py")
         return
 
     # Cargamos el modelo entrenado
-    model = YOLO(str(MODELO_ENTRENADO))
+    model = YOLO(str(modelo))
 
     # Abrimos la camara
     cap = cv2.VideoCapture(CAMERA_INDEX)

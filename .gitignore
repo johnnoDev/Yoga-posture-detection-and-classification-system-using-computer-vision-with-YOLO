@@ -1,4 +1,5 @@
 *.pt
+!clasificador/modelo.pt
 venv
 *.txt
 *.webp
@@ -15,3 +16,8 @@ venv
 clasificador/dataset
 clasificador/runs
 clasificador/predicciones
+clasificador/negativos_extra
+clasificador/_negativos_tmp
+
+# Imagenes con el veredicto que genera imagenes.py
+resultados

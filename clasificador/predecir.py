@@ -25,7 +25,7 @@ from pathlib import Path
 import cv2
 from ultralytics import YOLO
 
-from config import MODELO_ENTRENADO, DATASET_DIR
+from config import ruta_modelo, DATASET_DIR
 
 # Entrada por defecto: las imagenes de test del dataset
 ENTRADA_POR_DEFECTO = DATASET_DIR / "test"
@@ -35,9 +35,10 @@ DIR_SALIDA = Path(__file__).resolve().parent / "predicciones"
 
 
 def main():
-    # Necesitamos el modelo entrenado
-    if not MODELO_ENTRENADO.exists():
-        print(f"No se encontro el modelo entrenado en {MODELO_ENTRENADO}")
+    # Necesitamos el modelo entrenado (copia publicada o best.pt)
+    modelo = ruta_modelo()
+    if not modelo.exists():
+        print(f"No se encontro el modelo entrenado en {modelo}")
         print("Ejecuta primero:  python clasificador/entrenar.py")
         return
 
@@ -48,7 +49,7 @@ def main():
         return
 
     # Cargamos el modelo YA entrenado
-    model = YOLO(str(MODELO_ENTRENADO))
+    model = YOLO(str(modelo))
 
     # YOLO acepta una imagen, una lista de imagenes o una carpeta entera
     resultados = model(str(entrada), verbose=False)

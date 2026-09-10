@@ -17,10 +17,13 @@ Cambios para uso local:
 Uso:
     python clasificador/entrenar.py
 """
+import shutil
+
 from config import (
     DATASET_DIR,
     MODELO_BASE,
     MODELO_ENTRENADO,
+    MODELO_PUBLICADO,
     EPOCHS,
     IMGSZ,
     DEVICE,
@@ -52,6 +55,14 @@ def main():
 
     print("\nEntrenamiento terminado.")
     print(f"Modelo entrenado: {MODELO_ENTRENADO}")
+
+    # Copia estable y versionable del modelo final (ver config.MODELO_PUBLICADO).
+    # Asi el detector funciona al clonar el repo en otra maquina sin reentrenar.
+    if MODELO_ENTRENADO.exists():
+        shutil.copy(MODELO_ENTRENADO, MODELO_PUBLICADO)
+        print(f"Copia publicada:  {MODELO_PUBLICADO}")
+        print("Para llevarla a otra maquina, subela a git:")
+        print(f"  git add {MODELO_PUBLICADO.relative_to(BASE_DIR.parent).as_posix()}")
 
 
 if __name__ == "__main__":
