@@ -12,8 +12,21 @@ A diferencia del resto del repo (que hace *pose estimation*), este módulo
 
 ```bash
 # desde la raíz del repo, con el venv activado
-pip install -r clasificador/requirements.txt   # añade 'roboflow'
+pip install -r clasificador/requirements.txt   # añade 'python-dotenv'
 ```
+
+> ⚠️ **No instales `roboflow` junto al resto.** Arrastra `opencv-python-headless`,
+> que pisa a `opencv-python` y hace que `cv2.imshow` (las ventanas de
+> `video.py`, `video_en_vivo.py`, `imagenes.py`) falle con
+> *"The function is not implemented"*. `roboflow` solo hace falta para el
+> paso 1 (descargar el dataset); instálalo aparte y límpialo después:
+>
+> ```bash
+> pip install roboflow
+> python clasificador/descargar_dataset.py
+> pip uninstall -y roboflow opencv-python-headless
+> pip install --force-reinstall opencv-python
+> ```
 
 ## Pasos
 

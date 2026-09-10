@@ -31,8 +31,8 @@ _MODELO_PUBLICADO = BASE_DIR / "clasificador" / "modelo.pt"
 _MODELO_ENTRENADO = BASE_DIR / "clasificador" / "runs" / "classify" / "train" / "weights" / "best.pt"
 MODEL_PATH = _MODELO_PUBLICADO if _MODELO_PUBLICADO.exists() else _MODELO_ENTRENADO
 
-# Imagen que se analiza si no pasas ninguna por la linea de comandos
-IMAGEN_POR_DEFECTO = BASE_DIR / "img" / "kenichan.png"
+# # Imagen que se analiza si no pasas ninguna por la linea de comandos
+# IMAGEN_POR_DEFECTO = BASE_DIR / "img" / "kenichan.png"
 
 # Carpeta donde se guardan las imagenes con el veredicto
 DIR_SALIDA = BASE_DIR / "resultados"
