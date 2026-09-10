@@ -186,18 +186,28 @@ Ruta del video en la variable `video_path`. Pulsa **Esc** para salir.
 
 ### 3. Cámara en vivo — [video_en_vivo.py](video_en_vivo.py)
 
-Análisis de la webcam optimizado para CPU: modelo *nano*, `imgsz` reducido y captura
-en un hilo aparte para procesar siempre el cuadro más reciente. Muestra FPS, resalta
-cada punto y lo etiqueta con su nombre; imprime en consola cuántos puntos válidos
-tiene cada persona.
+Analiza la webcam con **dos modelos a la vez** y muestra en una banda superior
+**qué postura de yoga está haciendo el usuario** (nombre + confianza):
+
+1. **YOLO-Pose** (*nano*) dibuja el esqueleto y etiqueta cada keypoint.
+2. **El clasificador entrenado** ([clasificador/modelo.pt](clasificador/modelo.pt))
+   predice la postura sobre el recorte de la persona.
+
+Optimizado para CPU: `imgsz` reducido, captura en un hilo aparte, la clasificación
+solo se ejecuta 1 de cada `CLASIFICAR_CADA_N` cuadros y las probabilidades se
+suavizan con una media móvil para que la etiqueta no parpadee. Si la confianza
+baja del umbral o la clase es `no_yoga`, la banda avisa que no hay una postura clara.
 
 ```bash
 python video_en_vivo.py
 ```
 
 Parámetros al inicio del archivo: `CAMERA_INDEX` (0 = webcam por defecto, o una URL
-RTSP/IP), `MODEL_PATH`, `IMGSZ`, `CAM_WIDTH`/`CAM_HEIGHT`, `KP_CONF`. Pulsa **Esc**
-para salir.
+RTSP/IP), `POSE_PATH`, `CLS_PATH`, `IMGSZ`, `CAM_WIDTH`/`CAM_HEIGHT`, `KP_CONF`,
+`CLASIFICAR_CADA_N`, `EMA_ALPHA`, `UMBRAL_CONFIANZA`. Pulsa **Esc** para salir.
+
+> Requiere el modelo entrenado. Ya viene en el repo como
+> `clasificador/modelo.pt`; si no está, ejecuta `python clasificador/entrenar.py`.
 
 ## Cómo acceder a los puntos por código
 
