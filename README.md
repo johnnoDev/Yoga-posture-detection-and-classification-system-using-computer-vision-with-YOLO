@@ -49,28 +49,93 @@ Cada punto viene con una coordenada `(x, y)` y una **confianza** entre 0 y 1.
 
 El listado completo con versiones fijadas está en [requirements.txt](requirements.txt).
 
-## Instalación
+## Instalación paso a paso
+
+### 1. Clonar el repositorio
 
 ```bash
-# 1. Clonar el repositorio
 git clone https://github.com/johnnoDev/Yoga-posture-detection-and-classification-system-using-computer-vision-with-YOLO.git
 cd Yoga-posture-detection-and-classification-system-using-computer-vision-with-YOLO
+```
 
-# 2. Crear y activar un entorno virtual
+### 2. Verificar la versión de Python
+
+```bash
+python --version
+```
+
+Debe ser **3.10, 3.11 o 3.12**. Si `python` no funciona, prueba con `py -3.12`.
+
+### 3. Crear el entorno virtual
+
+```bash
 python -m venv venv
+```
 
-#    Windows (PowerShell)
+### 4. Activar el entorno virtual
+
+**Windows (PowerShell):**
+
+```powershell
 venv\Scripts\Activate.ps1
-#    Windows (cmd)
-venv\Scripts\activate.bat
-#    Linux / macOS
-source venv/bin/activate
+```
 
-# 3. Instalar las dependencias
+> Si aparece el error *"la ejecución de scripts está deshabilitada en este sistema"*,
+> ejecuta una sola vez:
+> ```powershell
+> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+> ```
+> y vuelve a activar.
+
+**Windows (cmd):**
+
+```cmd
+venv\Scripts\activate.bat
+```
+
+**Linux / macOS:**
+
+```bash
+source venv/bin/activate
+```
+
+Cuando el entorno está activo, el prompt muestra `(venv)` al inicio.
+
+### 5. Actualizar pip
+
+```bash
+python -m pip install --upgrade pip
+```
+
+### 6. Instalar las dependencias
+
+```bash
 pip install -r requirements.txt
 ```
 
-Instalación mínima (sin versiones fijadas):
+> **Si aparece el error `Invalid requirement: 'a\x00n\x00y\x00i\x00o...'`**, el archivo
+> `requirements.txt` quedó guardado en codificación UTF-16 (pasa al usar
+> `pip freeze > requirements.txt` en PowerShell). Regénéralo en UTF-8:
+> ```powershell
+> pip freeze | Out-File -Encoding utf8 requirements.txt
+> ```
+> o vuelve a descargar el archivo del repositorio, y repite este paso.
+
+La primera instalación descarga `torch` y puede tardar varios minutos (aprox. 2 GB).
+
+### 7. Comprobar la instalación
+
+```bash
+python -c "from ultralytics import YOLO; print('OK')"
+```
+
+Si imprime `OK`, ya puedes pasar a [Uso del software](#uso-del-software).
+
+---
+
+### Instalación mínima (sin versiones fijadas)
+
+Si no necesitas reproducir las versiones exactas:
 
 ```bash
 pip install ultralytics opencv-python
